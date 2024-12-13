@@ -16,12 +16,24 @@ class PersonService:
 
     @staticmethod
     def create_person(person_request: PersonRequestModel, cursor) -> bool:
+
+        cursor.execute("""INSERT INTO Person (PersonName, Cpf, Phone, BirthDate, Mail, RegisterDate, 
+                                        HasAcceptedPromotion, HasAcceptedParticipation) 
+                                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                       (person_request.person_name, person_request.cpf, person_request.phone, person_request.birth_date,
+                        person_request.mail, person_request.register_date, person_request.has_accepted_promotion,
+                        person_request.has_accepted_participation))
+
+        if cursor.rowcount <= 0:
+            return False
+
+        """
         person_df = PersonService().get_person_by_cpf(person_request.cpf, cursor)
 
         if person_df.empty:
-            cursor.execute("""INSERT INTO Person (PersonName, Cpf, Phone, BirthDate, Mail, RegisterDate, 
+            cursor.execute(INSERT INTO Person (PersonName, Cpf, Phone, BirthDate, Mail, RegisterDate, 
                                 HasAcceptedPromotion, HasAcceptedParticipation) 
-                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""",
+                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s),
                            (person_request.person_name, person_request.cpf, person_request.phone, person_request.birth_date,
                             person_request.mail, person_request.register_date, person_request.has_accepted_promotion,
                             person_request.has_accepted_participation))
@@ -36,3 +48,4 @@ class PersonService:
 
         return PortfolioService().create_portfolio(cursor, person_id, person_request.image_ids,
                                                    person_request.authentication_id)
+        """
