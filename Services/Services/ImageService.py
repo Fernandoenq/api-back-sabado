@@ -12,7 +12,7 @@ class ImageService:
             WHERE Active = 1 
             AND IsDeleted = 0 
             ORDER BY RegisterDate DESC
-            LIMIT 18
+            LIMIT 28
             """)
         result = cursor.fetchall()
 
