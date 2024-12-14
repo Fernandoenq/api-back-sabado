@@ -24,9 +24,10 @@ class PersonService:
                         person_request.mail, person_request.register_date, person_request.has_accepted_promotion,
                         person_request.has_accepted_participation))
 
-        if cursor.rowcount <= 0:
-            return False
+        person_id = cursor.lastrowid
 
+        return PortfolioService().create_portfolio(cursor, person_id, person_request.image_ids,
+                                                   person_request.authentication_id)
         """
         person_df = PersonService().get_person_by_cpf(person_request.cpf, cursor)
 
@@ -49,3 +50,4 @@ class PersonService:
         return PortfolioService().create_portfolio(cursor, person_id, person_request.image_ids,
                                                    person_request.authentication_id)
         """
+
